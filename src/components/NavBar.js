@@ -56,12 +56,12 @@ class NavBar extends Component {
             </Nav>
             <Nav navbar>
               <Link to={GROUP}>
-                <Button>我的队伍</Button>
+                <Button>队伍</Button>
               </Link>
             </Nav>
             <Nav navbar>
               <Link to={USER}>
-                <Button>个人信息</Button>
+                <Button>统计</Button>
               </Link>
             </Nav>
           </Collapse>

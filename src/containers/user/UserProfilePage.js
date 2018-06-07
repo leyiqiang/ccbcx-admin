@@ -4,9 +4,6 @@ import PropTypes from 'prop-types'
 import { Jumbotron } from 'reactstrap'
 import _ from 'lodash'
 import UserProfile from 'src/components/user/UserProfile'
-import GroupProfile from 'src/components/group/GroupProfile'
-import GroupSubmitForm from 'src/components/group/GroupSubmitForm'
-import {joinGroup} from '../../api/group'
 
 @inject(stores => {
   const { sessionStore, loadingStore } = stores

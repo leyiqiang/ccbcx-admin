@@ -73,7 +73,7 @@ class RoutePage extends Component {
           <Switch>
             <Route exact path={ROOT} component={HomePage} />
             {/*<Route path={USER} component={UserRoutePage} />*/}
-            {/*<Route path={GROUP} component={GroupRoutePage} />*/}
+            <Route path={GROUP} component={GroupRoutePage} />
             <Route path={'*'} component={() => <Redirect to={ROOT}/> } />
           </Switch>
           <Footer/>

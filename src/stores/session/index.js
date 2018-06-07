@@ -23,6 +23,7 @@ class SessionStore {
       loadingStore.isAuthLoading = false
     } catch (err) {
       setAuthToken(null)
+      self.authMessage = null
     }
     loadingStore.isAuthLoading = false
   }

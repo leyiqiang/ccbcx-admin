@@ -4,7 +4,9 @@ import { action, observable } from 'mobx'
 // import sessionStore from 'src/stores/session'
 
 class LoadingStore {
-  @observable isAuthLoading = false;
+  @observable isAuthLoading = true;
+  @observable isGroupListLoading = true;
+  @observable isGroupProfileLoading = true;
 
   constructor () {
   }
