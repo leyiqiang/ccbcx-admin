@@ -11,7 +11,7 @@ import GroupProfile from 'src/components/group/GroupProfile'
     groupName,
     groupContact,
     getGroupInfo,
-    MemberList,
+    memberList,
     invitationCode,
     errorMessage,
   } = groupStore
@@ -20,7 +20,7 @@ import GroupProfile from 'src/components/group/GroupProfile'
     groupName,
     groupContact,
     getGroupInfo,
-    MemberList,
+    memberList,
     invitationCode,
     errorMessage,
     isLoading: isGroupProfileLoading,
