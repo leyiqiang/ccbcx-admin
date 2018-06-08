@@ -4,6 +4,7 @@ import sessionStore from './session'
 import loadingStore from './loading'
 import groupStore from './group'
 import groupListStore from './groupList'
+import questionGroupStore from './questionGroup'
 
 const stores = {
   routingStore,
@@ -12,6 +13,7 @@ const stores = {
   loadingStore,
   groupStore,
   groupListStore,
+  questionGroupStore,
 }
 
 export default stores

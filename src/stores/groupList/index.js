@@ -25,8 +25,7 @@ class GroupListStore {
     try {
       self.errorMessage = null
       const res = await getGroupList()
-      const groupList = res.data
-      self.groupList = groupList
+      self.groupList = res.data
     } catch (err) {
       self.clearGroupList()
       self.errorMessage = getErrorMessage(err)

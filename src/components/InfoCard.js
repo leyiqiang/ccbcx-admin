@@ -10,7 +10,7 @@ class InfoCard extends Component {
     return (
       <div>
         <Jumbotron>
-          <h2 className='display-4'>CCBCX</h2>
+          <h2 className='display-4'>CCBCX-ADMIN</h2>
           <p className='lead'>欢迎.</p>
         </Jumbotron>
       </div>

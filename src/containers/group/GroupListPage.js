@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { observer, inject, PropTypes as MobxPropTypes } from 'mobx-react'
 import PropTypes from 'prop-types'
-import { Jumbotron } from 'reactstrap'
 import _ from 'lodash'
 // import {joinGroup} from '../../api/group'
-import { ListGroup, ListGroupItem } from 'reactstrap'
+import { ListGroup } from 'reactstrap'
 import GroupDetailsButton from '../../components/group/GroupDetailsButton'
 
 
