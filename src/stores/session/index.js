@@ -1,13 +1,14 @@
-import { action, observable } from 'mobx'
+import { action, observable, autorun } from 'mobx'
 import { getAuthInfo } from 'src/api/session'
 import { setAuthToken } from 'src/util'
 import loadingStore from '../loading'
 
 class SessionStore {
   @observable authMessage = null
+  @observable promise = null
 
   constructor() {
-    this.getAuthInfo()
+    this.promise = this.getAuthInfo()
   }
 
   @action logout() {

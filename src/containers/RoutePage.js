@@ -43,15 +43,13 @@ class RoutePage extends Component {
   }
 
   componentWillMount() {
-
+    if (/access_token|id_token|error/.test(location.hash)) {
+      this.props.handleAuthentication({ hash: location.hash })
+    }
   }
 
   renderRoute() {
     const { authMessage, logout, isAuthLoading } = this.props
-    if (/access_token|id_token|error/.test(location.hash)) {
-      this.props.handleAuthentication()
-      // this.props.getAuthInfo()
-    }
     if(isAuthLoading) {
       return (<h3>Loading...</h3>)
     }

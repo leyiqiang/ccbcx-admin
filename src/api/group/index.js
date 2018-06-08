@@ -19,12 +19,9 @@ const getGroupInfoUri = function({ groupName }) {
 
 export const getGroupInfo = async function({ groupName }) {
   const uri = getGroupInfoUri({ groupName })
-  console.log(axios.defaults.headers)
   return await axios.get(uri)
 }
 
 export const getGroupList = async function() {
-  console.log(axios.defaults.headers)
-
   return await axios.get(GROUP_LIST)
 }
