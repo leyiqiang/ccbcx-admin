@@ -1,27 +1,33 @@
 import React, { Component } from 'react'
-// import { ListGroup } from 'reactstrap'
+import { Jumbotron } from 'reactstrap'
 import { Tabs, Tab } from 'react-bootstrap'
 import {inject, observer, PropTypes as MobxPropTypes} from 'mobx-react/index'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
+import QuestionGroupSettings from '../../components/question/QuestionGroupSettings'
 
-const GROUP_ONE = 'GROUP_ONE'
-const GROUP_TWO = 'GROUP_TWO'
-const GROUP_THREE = 'GROUP_THREE'
-// const GROUP_META = 'GROUP_META'
+
 
 @inject(stores => {
   const { questionGroupStore, loadingStore } = stores
   const {
     questionGroup,
     getQuestionGroup,
+    updateQuestionGroup,
+    activeKey,
+    setActiveKey,
+    successMessage,
     errorMessage,
   } = questionGroupStore
   const { isQuestionGroupLoading } = loadingStore
   return {
     questionGroup,
     getQuestionGroup,
+    updateQuestionGroup,
     isQuestionGroupLoading,
+    activeKey,
+    setActiveKey,
+    successMessage,
     errorMessage,
   }
 })
@@ -30,16 +36,20 @@ class QuestionGroupPage extends Component {
   constructor(props) {
     super(props)
     this.renderQuestionGroup = this.renderQuestionGroup.bind(this)
-    this.toggle = this.toggle.bind(this)
-    this.state = {
-      activeTab: GROUP_ONE,
-    }
+    this.renderTabs = this.renderTabs.bind(this)
+    this.renderErrorMessage = this.renderErrorMessage.bind(this)
+    this.onTabSelect = this.onTabSelect.bind(this)
+    this.renderSuccessMessage = this.renderSuccessMessage.bind(this)
   }
 
   static propTypes = {
     questionGroup: MobxPropTypes.observableArray,
+    activeKey: PropTypes.number.isRequired,
+    setActiveKey: PropTypes.func.isRequired,
     isQuestionGroupLoading: PropTypes.bool.isRequired,
+    updateQuestionGroup: PropTypes.func.isRequired,
     getQuestionGroup: PropTypes.func.isRequired,
+    successMessage: PropTypes.string,
     errorMessage: PropTypes.string,
   }
 
@@ -47,44 +57,67 @@ class QuestionGroupPage extends Component {
     this.props.getQuestionGroup()
   }
 
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab,
-      })
+  renderErrorMessage() {
+    if (_.isNil(this.props.errorMessage)) {
+      return
+    } else {
+      return (
+        <div className='alert alert-danger' role='alert'>
+          {this.props.errorMessage}
+        </div>
+      )
     }
   }
+  renderSuccessMessage() {
+    if(_.isNil(this.props.successMessage)) {
+      return
+    } else {
+      return (
+        <div className='alert alert-success' role='alert'>
+          {this.props.successMessage}
+        </div>
+      )
+    }
+  }
+
+  onTabSelect(key) {
+    this.props.setActiveKey(key)
+  }
+
   renderQuestionGroup() {
-    const { questionGroup } = this.props
-    const questionGroupView = _.map(questionGroup, (group) => {
-      // const onRedirectToGroupDetails = () => {
-      //   redirectToDetails({ groupName: g.groupName })
-      // }
-      return(
+    const { questionGroup, updateQuestionGroup } = this.props
+    return _.map(questionGroup, (g) => {
+      return (
         <Tab
-          eventKey={group.groupType}
-          key={group.groupType}
-          title={group.groupName}>
-            Render question list by gorupType here
+          key={g.groupType}
+          eventKey={g.groupType}
+          title={g.groupName}>
+          <Jumbotron>
+            <QuestionGroupSettings {...g} updateQuestionGroup={updateQuestionGroup}/>
+          </Jumbotron>
         </Tab>)
     })
-    return (
-      <Tabs defaultActiveKey={GROUP_ONE} id='question-group-tabs'>
-        {questionGroupView}
-      </Tabs>
-    )
+  }
+
+  renderTabs() {
+    const { activeKey } = this.props
+    return(
+      <Tabs
+        defaultActiveKey={activeKey}
+        id='question-group-tabs'
+        onSelect={this.onTabSelect}
+      >
+        {this.renderQuestionGroup()}
+      </Tabs>)
   }
   render() {
     const { isQuestionGroupLoading } = this.props
-    if (isQuestionGroupLoading) {
-      return <h3>Loading...</h3>
-    }
-
     return (
       <div>
-        {/*{this.renderErrorMessage()}*/}
         <h3>题目</h3>
-        {this.renderQuestionGroup()}
+        {this.renderErrorMessage()}
+        {this.renderSuccessMessage()}
+        {isQuestionGroupLoading? <h3>Loading...</h3> : this.renderTabs()}
       </div>
     )
   }

@@ -8,11 +8,13 @@ const QUESTION_API = '/api/admin/question'
 
 const QUESTION_GROUP_LIST = QUESTION_API + '/groupList'
 
-// const getGroupInfoUri = function({ groupName }) {
+const UPDATE_QUESTION_GROUP = QUESTION_API + '/update'
+
+// const putGroupInfoUri = function({ groupType }) {
 //   return buildParamURI({
-//     originalURI: GROUP_INFO,
-//     paramName: PARAM_GROUP_NAME,
-//     substitutedValue: groupName,
+//     originalURI: UPDATE_QUESTION_GROUP,
+//     paramName: PARAM_GROUP_TYPE,
+//     substitutedValue: groupType,
 //   })
 // }
 
@@ -23,4 +25,10 @@ const QUESTION_GROUP_LIST = QUESTION_API + '/groupList'
 
 export const getQuestionGroup = async function() {
   return await axios.get(QUESTION_GROUP_LIST)
+}
+
+export const updateQuestionGroup = async function({groupType, groupName, releaseTime}) {
+  // const uri = putGroupInfoUri({ groupType })
+  return await axios.put(UPDATE_QUESTION_GROUP, {groupType, groupName, releaseTime})
+
 }
