@@ -9,6 +9,6 @@ export const GROUP_DETAILS = GROUP + '/' +  PARAM_GROUP_NAME
 
 
 export const PARAM_QUESTION_ID = ':questionId'
-export const QUESTION = '/question'
+export const QUESTION = '/questionGroup'
 export const QUESTION_LIST = QUESTION + '/list'
 export const QUESTION_SETTINGS = QUESTION + '/' + PARAM_QUESTION_ID

@@ -51,6 +51,7 @@ class QuestionGroupSettings extends Component {
   render() {
     return(
       <div>
+        <p>问题分类: {this.props.groupType === 4 ? 'metameta' : this.props.groupType}</p>
         <Label for='questionGroupName'>问题组名:</Label>
         <Input
           type='text'

@@ -12,6 +12,7 @@ import QuestionGroupSettings from '../../components/question/QuestionGroupSettin
   const { questionGroupStore, loadingStore } = stores
   const {
     questionGroup,
+    getQuestionList,
     getQuestionGroup,
     updateQuestionGroup,
     activeKey,
@@ -22,6 +23,7 @@ import QuestionGroupSettings from '../../components/question/QuestionGroupSettin
   const { isQuestionGroupLoading } = loadingStore
   return {
     questionGroup,
+    getQuestionList,
     getQuestionGroup,
     updateQuestionGroup,
     isQuestionGroupLoading,
@@ -48,6 +50,7 @@ class QuestionGroupPage extends Component {
     setActiveKey: PropTypes.func.isRequired,
     isQuestionGroupLoading: PropTypes.bool.isRequired,
     updateQuestionGroup: PropTypes.func.isRequired,
+    getQuestionList: PropTypes.func.isRequired,
     getQuestionGroup: PropTypes.func.isRequired,
     successMessage: PropTypes.string,
     errorMessage: PropTypes.string,
@@ -55,6 +58,7 @@ class QuestionGroupPage extends Component {
 
   componentWillMount() {
     this.props.getQuestionGroup()
+    this.props.getQuestionList()
   }
 
   renderErrorMessage() {

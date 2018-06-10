@@ -1,7 +1,8 @@
 import { action, observable } from 'mobx'
 import loadingStore from '../loading'
 import {getErrorMessage} from 'src/util'
-import {getQuestionGroup, updateQuestionGroup} from 'src/api/question'
+import {getQuestionGroup, updateQuestionGroup} from 'src/api/questionGroup'
+import {getQuestionList} from 'src/api/question'
 import _ from 'lodash'
 import moment from 'moment'
 
@@ -16,6 +17,7 @@ class QuestionGroupStore {
   @observable errorMessage= null
   @observable successMessage = null
   @observable activeKey = 1
+  @observable questionList = null
 
   @action setActiveKey(key) {
     self.activeKey = key
@@ -73,6 +75,18 @@ class QuestionGroupStore {
     }
     loadingStore.isQuestionGroupLoading = false
 
+  }
+
+  @action async getQuestionList() {
+    loadingStore.isQuestionListLoading = true
+    try {
+      self.errorMessage = null
+      const res = await getQuestionList()
+      console.log(res)
+    } catch(err) {
+      self.clearQuestionGroupList()
+      self.errorMessage = getErrorMessage(err)
+    }
   }
 }
 
