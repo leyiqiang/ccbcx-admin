@@ -5,7 +5,7 @@ import {getQuestionGroup, updateQuestionGroup} from 'src/api/questionGroup'
 import {getQuestionList} from 'src/api/question'
 import _ from 'lodash'
 import moment from 'moment'
-import {PARAM_QUESTION_ID, QUESTION_SETTINGS} from '../../data/route/index'
+import {PARAM_QUESTION_ID, QUESTION_SETTINGS} from 'src/data/route/index'
 import {buildParamURI} from '../../util/index'
 import routing from '../routing'
 

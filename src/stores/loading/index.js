@@ -9,7 +9,7 @@ class LoadingStore {
   @observable isGroupProfileLoading = true;
   @observable isQuestionGroupLoading = true;
   @observable isQuestionListLoading = true;
-
+  @observable isQuestionInfoLoading = true;
   constructor () {
   }
 }
