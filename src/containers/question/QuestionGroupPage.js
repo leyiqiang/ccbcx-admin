@@ -5,6 +5,7 @@ import {inject, observer, PropTypes as MobxPropTypes} from 'mobx-react/index'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
 import QuestionGroupSettings from '../../components/question/QuestionGroupSettings'
+import QuestionList from '../../components/question/QuestionList'
 
 
 
@@ -13,20 +14,25 @@ import QuestionGroupSettings from '../../components/question/QuestionGroupSettin
   const {
     questionGroup,
     getQuestionList,
+    questionList,
     getQuestionGroup,
     updateQuestionGroup,
     activeKey,
     setActiveKey,
+    redirectToSettings,
     successMessage,
     errorMessage,
   } = questionGroupStore
-  const { isQuestionGroupLoading } = loadingStore
+  const { isQuestionGroupLoading, isQuestionListLoading } = loadingStore
   return {
     questionGroup,
     getQuestionList,
     getQuestionGroup,
+    questionList,
     updateQuestionGroup,
     isQuestionGroupLoading,
+    isQuestionListLoading,
+    redirectToSettings,
     activeKey,
     setActiveKey,
     successMessage,
@@ -46,12 +52,15 @@ class QuestionGroupPage extends Component {
 
   static propTypes = {
     questionGroup: MobxPropTypes.observableArray,
+    questionList: MobxPropTypes.observableArray,
     activeKey: PropTypes.number.isRequired,
     setActiveKey: PropTypes.func.isRequired,
     isQuestionGroupLoading: PropTypes.bool.isRequired,
+    isQuestionListLoading: PropTypes.bool.isRequired,
     updateQuestionGroup: PropTypes.func.isRequired,
     getQuestionList: PropTypes.func.isRequired,
     getQuestionGroup: PropTypes.func.isRequired,
+    redirectToSettings: PropTypes.func.isRequired,
     successMessage: PropTypes.string,
     errorMessage: PropTypes.string,
   }
@@ -89,13 +98,25 @@ class QuestionGroupPage extends Component {
   }
 
   renderQuestionGroup() {
-    const { questionGroup, updateQuestionGroup } = this.props
+    const {
+      questionGroup,
+      updateQuestionGroup,
+      questionList,
+      isQuestionListLoading,
+      redirectToSettings,
+    } = this.props
     return _.map(questionGroup, (g) => {
       return (
         <Tab
           key={g.groupType}
           eventKey={g.groupType}
           title={g.groupName}>
+          <QuestionList
+            redirectToSettings={redirectToSettings}
+            groupType={g.groupType}
+            questionList={questionList}
+            isLoading={isQuestionListLoading}
+          />
           <Jumbotron>
             <QuestionGroupSettings {...g} updateQuestionGroup={updateQuestionGroup}/>
           </Jumbotron>

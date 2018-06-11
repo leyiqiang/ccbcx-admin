@@ -5,6 +5,9 @@ import {getQuestionGroup, updateQuestionGroup} from 'src/api/questionGroup'
 import {getQuestionList} from 'src/api/question'
 import _ from 'lodash'
 import moment from 'moment'
+import {PARAM_QUESTION_ID, QUESTION_SETTINGS} from '../../data/route/index'
+import {buildParamURI} from '../../util/index'
+import routing from '../routing'
 
 // const GROUP_ONE = 1
 // const GROUP_TWO = 2
@@ -82,12 +85,27 @@ class QuestionGroupStore {
     try {
       self.errorMessage = null
       const res = await getQuestionList()
-      console.log(res)
+      const unsortedQuestionList = res.data
+      const groupedQuestionList = _.sortBy(unsortedQuestionList,
+        q => parseInt(q.questionNumber.split('-')[0]))
+      self.questionList = _.sortBy(groupedQuestionList,
+        q => parseInt(q.questionNumber.split('-')[1]))
     } catch(err) {
       self.clearQuestionGroupList()
       self.errorMessage = getErrorMessage(err)
     }
+    loadingStore.isQuestionListLoading = false
   }
+
+  @action redirectToSettings({ questionNumber }) {
+    let redirectedURI = buildParamURI({
+      originalURI: QUESTION_SETTINGS,
+      paramName: PARAM_QUESTION_ID,
+      substitutedValue: questionNumber,
+    })
+    routing.history.push(redirectedURI)
+  }
+
 }
 
 const self = new QuestionGroupStore()

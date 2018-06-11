@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { observer, inject, PropTypes as MobxPropTypes } from 'mobx-react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-// import {joinGroup} from '../../api/group'
 import { ListGroup } from 'reactstrap'
 import GroupDetailsButton from '../../components/group/GroupDetailsButton'
 
