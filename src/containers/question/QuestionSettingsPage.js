@@ -14,6 +14,7 @@ import WithLoading from '../../components/WithLoading'
     updateQuestion,
     question,
     errorMessage,
+    successMessage,
     redirectToQuestionList,
   } = questionStore
   const { isQuestionInfoLoading } = loadingStore
@@ -22,6 +23,7 @@ import WithLoading from '../../components/WithLoading'
     updateQuestion,
     question,
     errorMessage,
+    successMessage,
     redirectToQuestionList,
     isQuestionInfoLoading,
   }
@@ -31,11 +33,13 @@ class QuestionSettingsPage extends Component {
   constructor(props) {
     super(props)
     this.renderErrorMessage = this.renderErrorMessage.bind(this)
+    this.renderSuccessMessage = this.renderSuccessMessage.bind(this)
   }
 
   static propTypes = {
     match: PropTypes.object,
     errorMessage: PropTypes.string,
+    successMessage: PropTypes.string,
     question: PropTypes.object,
     getQuestion: PropTypes.func.isRequired,
     updateQuestion: PropTypes.func.isRequired,
@@ -50,6 +54,18 @@ class QuestionSettingsPage extends Component {
       return (
         <div className='alert alert-danger' role='alert'>
           {this.props.errorMessage}
+        </div>
+      )
+    }
+  }
+
+  renderSuccessMessage() {
+    if(_.isNil(this.props.successMessage)) {
+      return
+    } else {
+      return (
+        <div className='alert alert-success' role='alert'>
+          {this.props.successMessage}
         </div>
       )
     }
@@ -71,6 +87,7 @@ class QuestionSettingsPage extends Component {
     return (
       <div>
         {this.renderErrorMessage()}
+        {this.renderSuccessMessage()}
         <QuestionWithLoading
           isLoading={isQuestionInfoLoading}
           updateQuestion={updateQuestion}

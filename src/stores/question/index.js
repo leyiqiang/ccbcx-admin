@@ -1,14 +1,16 @@
 import { observable, action } from 'mobx'
 import loadingStore from '../loading'
 import {getErrorMessage} from 'src/util'
-import {getQuestion} from 'src/api/question'
+import {getQuestion, updateQuestion} from 'src/api/question'
 import routing from '../routing'
+import _ from 'lodash'
 import { QUESTION_LIST} from '../../data/route'
 // import { setXAccessToken } from 'src/util'
 
 class QuestionStore {
   @observable errorMessage = null
   @observable question = null
+  @observable successMessage = null
 
   constructor () {
   }
@@ -19,7 +21,12 @@ class QuestionStore {
     loadingStore.isQuestionInfoLoading = true
     try {
       const res = await getQuestion({ questionNumber })
-      self.question = res.data
+      const question = res.data
+      if(!_.isNil(question.questionContent)) {
+        question.questionContent = JSON.parse(question.questionContent)
+      }
+      self.question = question
+
     } catch (err) {
       self.errorMessage = getErrorMessage(err)
     }
@@ -28,7 +35,19 @@ class QuestionStore {
   }
 
   @observable async updateQuestion({ questionNumber, questionContent, answer}) {
-    console.log(questionNumber)
+    self.errorMessage = null
+    try {
+      const stringContent = JSON.stringify(questionContent)
+      await updateQuestion({
+        questionNumber,
+        questionContent: stringContent,
+        answer,
+      })
+      self.successMessage = '更新成功'
+    } catch(err)  {
+      self.errorMessage = getErrorMessage(err)
+      self.question = null
+    }
   }
 
   @observable redirectToQuestionList() {
