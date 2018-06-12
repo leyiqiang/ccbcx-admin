@@ -18,6 +18,7 @@ class QuestionStore {
   @observable async getQuestion({ questionNumber }) {
     self.errorMessage = null
     self.question = null
+    self.successMessage = null
     loadingStore.isQuestionInfoLoading = true
     try {
       const res = await getQuestion({ questionNumber })
@@ -29,6 +30,7 @@ class QuestionStore {
 
     } catch (err) {
       self.errorMessage = getErrorMessage(err)
+      self.successMessage = null
     }
     loadingStore.isQuestionInfoLoading = false
 
@@ -36,6 +38,7 @@ class QuestionStore {
 
   @observable async updateQuestion({ questionNumber, questionContent, answer}) {
     self.errorMessage = null
+    self.successMessage = null
     try {
       const stringContent = JSON.stringify(questionContent)
       await updateQuestion({
@@ -43,11 +46,13 @@ class QuestionStore {
         questionContent: stringContent,
         answer,
       })
-      self.successMessage = '更新成功'
+      self.getQuestion({questionNumber})
     } catch(err)  {
       self.errorMessage = getErrorMessage(err)
       self.question = null
     }
+    self.successMessage = '更新成功'
+
   }
 
   @observable redirectToQuestionList() {

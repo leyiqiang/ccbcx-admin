@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import QuestionSettings from '../../components/question/QuestionSettings'
 import WithLoading from '../../components/WithLoading'
+import AlertMessage from '../../components/AlertMessage'
 // import _ from 'lodash'
 // import WithLoading from 'src/components/WithLoading'
 
@@ -32,8 +33,6 @@ import WithLoading from '../../components/WithLoading'
 class QuestionSettingsPage extends Component {
   constructor(props) {
     super(props)
-    this.renderErrorMessage = this.renderErrorMessage.bind(this)
-    this.renderSuccessMessage = this.renderSuccessMessage.bind(this)
   }
 
   static propTypes = {
@@ -47,30 +46,6 @@ class QuestionSettingsPage extends Component {
     redirectToQuestionList: PropTypes.func.isRequired,
   }
 
-  renderErrorMessage() {
-    if (_.isNil(this.props.errorMessage)) {
-      return
-    } else {
-      return (
-        <div className='alert alert-danger' role='alert'>
-          {this.props.errorMessage}
-        </div>
-      )
-    }
-  }
-
-  renderSuccessMessage() {
-    if(_.isNil(this.props.successMessage)) {
-      return
-    } else {
-      return (
-        <div className='alert alert-success' role='alert'>
-          {this.props.successMessage}
-        </div>
-      )
-    }
-  }
-
   componentWillMount() {
     const { questionNumber }  = this.props.match.params
     this.props.getQuestion({questionNumber})
@@ -82,13 +57,17 @@ class QuestionSettingsPage extends Component {
       updateQuestion,
       isQuestionInfoLoading,
       redirectToQuestionList,
+      errorMessage,
+      successMessage,
     } = this.props
     const QuestionWithLoading = WithLoading(QuestionSettings)
     return (
       <div>
-        {this.renderErrorMessage()}
-        {this.renderSuccessMessage()}
+        <AlertMessage bsStyle='danger' message={this.props.errorMessage}/>
+        <AlertMessage bsStyle='success' message={this.props.successMessage}/>
         <QuestionWithLoading
+          errorMessage={errorMessage}
+          successMessage={successMessage}
           isLoading={isQuestionInfoLoading}
           updateQuestion={updateQuestion}
           redirectToQuestionList={redirectToQuestionList}

@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import _ from 'lodash'
 import QuestionGroupSettings from '../../components/question/QuestionGroupSettings'
 import QuestionList from '../../components/question/QuestionList'
+import AlertMessage from '../../components/AlertMessage'
 
 
 
@@ -45,9 +46,7 @@ class QuestionGroupPage extends Component {
     super(props)
     this.renderQuestionGroup = this.renderQuestionGroup.bind(this)
     this.renderTabs = this.renderTabs.bind(this)
-    this.renderErrorMessage = this.renderErrorMessage.bind(this)
     this.onTabSelect = this.onTabSelect.bind(this)
-    this.renderSuccessMessage = this.renderSuccessMessage.bind(this)
   }
 
   static propTypes = {
@@ -68,29 +67,6 @@ class QuestionGroupPage extends Component {
   componentWillMount() {
     this.props.getQuestionGroup()
     this.props.getQuestionList()
-  }
-
-  renderErrorMessage() {
-    if (_.isNil(this.props.errorMessage)) {
-      return
-    } else {
-      return (
-        <div className='alert alert-danger' role='alert'>
-          {this.props.errorMessage}
-        </div>
-      )
-    }
-  }
-  renderSuccessMessage() {
-    if(_.isNil(this.props.successMessage)) {
-      return
-    } else {
-      return (
-        <div className='alert alert-success' role='alert'>
-          {this.props.successMessage}
-        </div>
-      )
-    }
   }
 
   onTabSelect(key) {
@@ -140,8 +116,8 @@ class QuestionGroupPage extends Component {
     return (
       <div>
         <h3>题目</h3>
-        {this.renderErrorMessage()}
-        {this.renderSuccessMessage()}
+        <AlertMessage bsStyle='danger' message={this.props.errorMessage}/>
+        <AlertMessage bsStyle='success' message={this.props.successMessage}/>
         {isQuestionGroupLoading? <h3>Loading...</h3> : this.renderTabs()}
       </div>
     )
