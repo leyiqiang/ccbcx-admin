@@ -6,7 +6,6 @@ import {Button, Label, Input} from 'reactstrap'
 import _ from 'lodash'
 
 import ReactQuill from 'react-quill'
-import Delta from 'quill-delta'
 import 'react-quill/dist/quill.snow.css'
 
 const modules = {
@@ -50,7 +49,7 @@ class QuestionSettings extends Component {
   static propTypes = {
     questionNumber: PropTypes.string,
     answer: PropTypes.string,
-    questionContent: PropTypes.object,
+    questionContent: PropTypes.string,
     updateQuestion: PropTypes.func.isRequired,
     redirectToQuestionList: PropTypes.func.isRequired,
   }
@@ -71,12 +70,11 @@ class QuestionSettings extends Component {
   }
 
   onSubmitQuestionChange() {
-    // const currentContent = this.state.questionContent.getCurrentContent()
-    // this.props.updateQuestion({
-    //   questionNumber: this.props.questionNumber,
-    //   answer: this.state.answer,
-    //   questionContent: convertToRaw(currentContent),
-    // })
+    this.props.updateQuestion({
+      questionNumber: this.props.questionNumber,
+      answer: this.state.answer,
+      questionContent: this.state.questionContent,
+    })
   }
 
   onCancel() {

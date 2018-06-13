@@ -22,11 +22,7 @@ class QuestionStore {
     loadingStore.isQuestionInfoLoading = true
     try {
       const res = await getQuestion({ questionNumber })
-      const question = res.data
-      if(!_.isNil(question.questionContent)) {
-        question.questionContent = JSON.parse(question.questionContent)
-      }
-      self.question = question
+      self.question = res.data
 
     } catch (err) {
       self.errorMessage = getErrorMessage(err)
@@ -40,10 +36,9 @@ class QuestionStore {
     self.errorMessage = null
     self.successMessage = null
     try {
-      const stringContent = JSON.stringify(questionContent)
       await updateQuestion({
         questionNumber,
-        questionContent: stringContent,
+        questionContent,
         answer,
       })
       self.getQuestion({questionNumber})
