@@ -55,7 +55,6 @@ class QuestionSettings extends Component {
   }
 
   onQuestionContentChange(value) {
-    console.log(value)
     this.setState({
       questionContent: value,
     })
