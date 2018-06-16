@@ -18,7 +18,7 @@ class QuestionSettingsButton extends Component {
 
 
   render() {
-    const { questionNumber, onRedirectToQuestionSettings, isMeta } = this.props
+    const { questionNumber, onRedirectToQuestionSettings } = this.props
     return(
       <ListGroupItem
         onClick={onRedirectToQuestionSettings}

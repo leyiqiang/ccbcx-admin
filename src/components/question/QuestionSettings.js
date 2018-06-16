@@ -114,8 +114,11 @@ class QuestionSettings extends Component {
   }
 
   render() {
+    const { questionNumber } = this.props
     return(
       <div>
+        <h3>题号: {questionNumber}</h3>
+        <hr/>
         <Label for='questionGroupName'>题目内容:</Label>
         <div className='border' onClick={this.focus}>
           <ReactQuill
