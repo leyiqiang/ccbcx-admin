@@ -32,7 +32,14 @@ class QuestionStore {
 
   }
 
-  @observable async updateQuestion({ questionNumber, questionContent, answer}) {
+  @observable async updateQuestion({
+    questionNumber,
+    questionContent,
+    answer,
+    hint1,
+    hint2,
+    hint3,
+  }) {
     self.errorMessage = null
     self.successMessage = null
     try {
@@ -40,13 +47,17 @@ class QuestionStore {
         questionNumber,
         questionContent,
         answer,
+        hint1,
+        hint2,
+        hint3,
       })
       self.getQuestion({questionNumber})
+      self.successMessage = '更新成功'
     } catch(err)  {
       self.errorMessage = getErrorMessage(err)
       self.question = null
+      self.successMessage = null
     }
-    self.successMessage = '更新成功'
 
   }
 

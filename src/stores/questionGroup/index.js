@@ -87,9 +87,8 @@ class QuestionGroupStore {
       const res = await getQuestionList()
       const unsortedQuestionList = res.data
       const groupedQuestionList = _.sortBy(unsortedQuestionList,
-        q => parseInt(q.questionNumber.split('-')[0]))
-      self.questionList = _.sortBy(groupedQuestionList,
-        q => parseInt(q.questionNumber.split('-')[1]))
+        q => parseInt(q.questionNumber))
+      self.questionList = groupedQuestionList
     } catch(err) {
       self.clearQuestionGroupList()
       self.errorMessage = getErrorMessage(err)

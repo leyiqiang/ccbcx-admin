@@ -28,6 +28,20 @@ export const getQuestion = async function({ questionNumber }) {
   return await axios.get(uri)
 }
 
-export const updateQuestion = async function({ questionNumber, questionContent, answer}) {
-  return await axios.post(UPDATE_QUESTION, {questionNumber, questionContent, answer})
+export const updateQuestion = async function({
+  questionNumber,
+  questionContent,
+  answer,
+  hint1,
+  hint2,
+  hint3,
+}) {
+  return await axios.post(UPDATE_QUESTION, {
+    questionNumber,
+    questionContent,
+    answer,
+    hint1,
+    hint2,
+    hint3,
+  })
 }

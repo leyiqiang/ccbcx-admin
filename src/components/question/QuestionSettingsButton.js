@@ -23,7 +23,7 @@ class QuestionSettingsButton extends Component {
       <ListGroupItem
         onClick={onRedirectToQuestionSettings}
         action>
-        {isMeta? `${questionNumber}(Meta)` : questionNumber}
+        {questionNumber}
       </ListGroupItem>
     )
   }
