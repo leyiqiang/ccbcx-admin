@@ -94,7 +94,10 @@ class QuestionGroupPage extends Component {
             isLoading={isQuestionListLoading}
           />
           <Jumbotron>
-            <QuestionGroupSettings {...g} updateQuestionGroup={updateQuestionGroup}/>
+            <QuestionGroupSettings
+              {...g}
+              updateQuestionGroup={updateQuestionGroup}
+            />
           </Jumbotron>
         </Tab>)
     })
