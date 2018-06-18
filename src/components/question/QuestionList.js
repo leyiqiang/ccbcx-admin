@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import {observer, PropTypes as MobxPropTypes} from 'mobx-react/index'
 import { ListGroup } from 'reactstrap'
 import _ from 'lodash'
-import { Button } from 'reactstrap'
 import PropTypes from 'prop-types'
 import QuestionSettingsButton from './QuestionSettingsButton'
 

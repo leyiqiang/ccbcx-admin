@@ -1,7 +1,7 @@
 import { observable, action } from 'mobx'
 import loadingStore from '../loading'
 import {getErrorMessage} from 'src/util'
-import {getQuestion, updateQuestion} from 'src/api/question'
+import {getQuestion, updateQuestion, updateQuestionLocation} from 'src/api/question'
 import routing from '../routing'
 import _ from 'lodash'
 import { QUESTION_LIST} from '../../data/route'
@@ -30,6 +30,17 @@ class QuestionStore {
     }
     loadingStore.isQuestionInfoLoading = false
 
+  }
+
+  @observable async updateQuestionLocation({ questionNumber, location }) {
+    self.errorMessage = null
+    self.successMessage = null
+    try {
+      await updateQuestionLocation({ questionNumber, location})
+    } catch (err) {
+      self.errorMessage = getErrorMessage(err)
+      self.successMessage = null
+    }
   }
 
   @observable async updateQuestion({

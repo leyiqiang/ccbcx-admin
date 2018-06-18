@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { observer, PropTypes as MobxPropTypes } from 'mobx-react'
-import { toJS } from 'mobx'
 import PropTypes from 'prop-types'
 import {Button, Label, Input} from 'reactstrap'
 import _ from 'lodash'

@@ -5,11 +5,12 @@ import _ from 'lodash'
 import QuestionSettings from '../../components/question/QuestionSettings'
 import WithLoading from '../../components/WithLoading'
 import AlertMessage from '../../components/AlertMessage'
+import QuestionMap from '../../components/question/QuestionMap'
 // import _ from 'lodash'
 // import WithLoading from 'src/components/WithLoading'
 
 @inject(stores => {
-  const { questionStore, loadingStore } = stores
+  const { questionStore, questionGroupStore, loadingStore } = stores
   const {
     getQuestion,
     updateQuestion,
@@ -17,16 +18,22 @@ import AlertMessage from '../../components/AlertMessage'
     errorMessage,
     successMessage,
     redirectToQuestionList,
+    updateQuestionLocation,
   } = questionStore
-  const { isQuestionInfoLoading } = loadingStore
+  const { questionList, getQuestionList } = questionGroupStore
+  const { isQuestionInfoLoading, isQuestionListLoading } = loadingStore
   return {
     getQuestion,
+    questionList,
     updateQuestion,
     question,
     errorMessage,
     successMessage,
+    getQuestionList,
+    updateQuestionLocation,
     redirectToQuestionList,
     isQuestionInfoLoading,
+    isQuestionListLoading,
   }
 })
 @observer
@@ -40,14 +47,19 @@ class QuestionSettingsPage extends Component {
     errorMessage: PropTypes.string,
     successMessage: PropTypes.string,
     question: PropTypes.object,
+    questionList: MobxPropTypes.observableArray,
+    getQuestionList: PropTypes.func.isRequired,
+    updateQuestionLocation: PropTypes.func.isRequired,
     getQuestion: PropTypes.func.isRequired,
     updateQuestion: PropTypes.func.isRequired,
     isQuestionInfoLoading: PropTypes.bool.isRequired,
+    isQuestionListLoading: PropTypes.bool.isRequired,
     redirectToQuestionList: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
     const { questionNumber }  = this.props.match.params
+    this.props.getQuestionList()
     this.props.getQuestion({questionNumber})
   }
 
@@ -55,12 +67,16 @@ class QuestionSettingsPage extends Component {
     const {
       question,
       updateQuestion,
+      updateQuestionLocation,
       isQuestionInfoLoading,
       redirectToQuestionList,
       errorMessage,
       successMessage,
+      questionList,
+      isQuestionListLoading,
     } = this.props
     const QuestionWithLoading = WithLoading(QuestionSettings)
+    const QuestionMapWithLoading = WithLoading(QuestionMap)
     return (
       <div>
         <AlertMessage bsStyle='danger' message={this.props.errorMessage}/>
@@ -71,6 +87,12 @@ class QuestionSettingsPage extends Component {
           isLoading={isQuestionInfoLoading}
           updateQuestion={updateQuestion}
           redirectToQuestionList={redirectToQuestionList}
+          {...question}
+        />
+        <QuestionMapWithLoading
+          questionList={questionList}
+          updateQuestionLocation={updateQuestionLocation}
+          isLoading={isQuestionInfoLoading && isQuestionListLoading}
           {...question}
         />
       </div>

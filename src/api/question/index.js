@@ -11,6 +11,8 @@ const QUESTION_INFO = QUESTION_API + '/' + PARAM_QUESTION_NUMBER
 
 const UPDATE_QUESTION = QUESTION_API + '/update'
 
+const UPDATE_QUESTION_LOCATION = QUESTION_API + '/updateLocation'
+
 const getQuestionUri = function({ questionNumber }) {
   return buildParamURI({
     originalURI: QUESTION_INFO,
@@ -26,6 +28,10 @@ export const getQuestionList = async function() {
 export const getQuestion = async function({ questionNumber }) {
   const uri = getQuestionUri({ questionNumber })
   return await axios.get(uri)
+}
+
+export const updateQuestionLocation = async function({ questionNumber, location}) {
+  return await axios.post(UPDATE_QUESTION_LOCATION, {questionNumber, location})
 }
 
 export const updateQuestion = async function({
