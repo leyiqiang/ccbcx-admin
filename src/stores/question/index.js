@@ -5,6 +5,7 @@ import {getQuestion, updateQuestion, updateQuestionLocation} from 'src/api/quest
 import routing from '../routing'
 import _ from 'lodash'
 import { QUESTION_LIST} from '../../data/route'
+import questionGroupStore from  '../questionGroup'
 // import { setXAccessToken } from 'src/util'
 
 class QuestionStore {
@@ -37,6 +38,9 @@ class QuestionStore {
     self.successMessage = null
     try {
       await updateQuestionLocation({ questionNumber, location})
+      await questionGroupStore.getQuestionList()
+      self.getQuestion({questionNumber})
+      self.successMessage = '更新成功'
     } catch (err) {
       self.errorMessage = getErrorMessage(err)
       self.successMessage = null

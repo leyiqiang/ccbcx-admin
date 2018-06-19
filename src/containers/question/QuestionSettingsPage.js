@@ -59,8 +59,8 @@ class QuestionSettingsPage extends Component {
 
   componentWillMount() {
     const { questionNumber }  = this.props.match.params
-    this.props.getQuestionList()
     this.props.getQuestion({questionNumber})
+    this.props.getQuestionList()
   }
 
   render() {
@@ -89,12 +89,18 @@ class QuestionSettingsPage extends Component {
           redirectToQuestionList={redirectToQuestionList}
           {...question}
         />
-        <QuestionMapWithLoading
-          questionList={questionList}
-          updateQuestionLocation={updateQuestionLocation}
-          isLoading={isQuestionInfoLoading && isQuestionListLoading}
-          {...question}
-        />
+        <div className='container'>
+          <div className="row justify-content">
+            <div className='col-xs-12 col-sm-12 col-md-6 col-lg-6'>
+              <QuestionMapWithLoading
+                questionList={questionList}
+                updateQuestionLocation={updateQuestionLocation}
+                isLoading={isQuestionInfoLoading}
+                {...question}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
