@@ -56,7 +56,7 @@ class QuestionMap extends Component {
     if (!isMeta) {
       return (
         <div>
-          <h5>Set Location:</h5>
+          <h5>修改位置(点击格子即可):</h5>
           {_.map(gridItems, row => _.map(row, (item) => {
             return item
           }))}
