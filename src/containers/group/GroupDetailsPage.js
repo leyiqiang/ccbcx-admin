@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 // import _ from 'lodash'
 import WithLoading from 'src/components/WithLoading'
 import GroupProfile from 'src/components/group/GroupProfile'
+import {Button, Label, Input} from 'reactstrap'
 
 @inject(stores => {
   const { groupStore, loadingStore } = stores
