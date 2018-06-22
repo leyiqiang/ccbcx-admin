@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 // import _ from 'lodash'
 import WithLoading from 'src/components/WithLoading'
 import GroupProfile from 'src/components/group/GroupProfile'
+import AlertMessage from '../../components/AlertMessage'
 import {Button, Label, Input} from 'reactstrap'
 
 @inject(stores => {
@@ -14,7 +15,11 @@ import {Button, Label, Input} from 'reactstrap'
     getGroupInfo,
     memberList,
     invitationCode,
+    addBlackList,
     errorMessage,
+    removeBlackList,
+    blockedUntil,
+    successMessage,
   } = groupStore
   const { isGroupProfileLoading } = loadingStore
   return {
@@ -23,6 +28,10 @@ import {Button, Label, Input} from 'reactstrap'
     getGroupInfo,
     memberList,
     invitationCode,
+    addBlackList,
+    blockedUntil,
+    removeBlackList,
+    successMessage,
     errorMessage,
     isLoading: isGroupProfileLoading,
   }
@@ -31,6 +40,12 @@ import {Button, Label, Input} from 'reactstrap'
 class GroupDetailsPage extends Component {
   constructor(props) {
     super(props)
+    this.onSecondsChange = this.onSecondsChange.bind(this)
+    this.onAddBlackList = this.onAddBlackList.bind(this)
+    this.onRemoveBlackList = this.onRemoveBlackList.bind(this)
+    this.state = {
+      seconds: 0,
+    }
   }
 
   static propTypes = {
@@ -40,6 +55,28 @@ class GroupDetailsPage extends Component {
     invitationCode: PropTypes.string,
     match: PropTypes.object,
     getGroupInfo: PropTypes.func.isRequired,
+    addBlackList: PropTypes.func.isRequired,
+    removeBlackList: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
+    successMessage: PropTypes.string,
+    blockedUntil: PropTypes.string,
+  }
+
+  onSecondsChange(e) {
+    e.preventDefault()
+    this.setState({
+      seconds: e.target.value,
+    })
+  }
+
+  onAddBlackList() {
+    const { groupName }  = this.props.match.params
+    this.props.addBlackList({groupName, seconds: this.state.seconds})
+  }
+
+  onRemoveBlackList() {
+    const { groupName }  = this.props.match.params
+    this.props.removeBlackList({groupName})
   }
 
   componentWillMount() {
@@ -49,8 +86,25 @@ class GroupDetailsPage extends Component {
 
   render() {
     const GroupProfileWithLoading = WithLoading(GroupProfile)
+    const{ blockedUntil } = this.props
     return (
-      <GroupProfileWithLoading {...this.props} />
+      <div>
+        <AlertMessage bsStyle='danger' message={this.props.errorMessage}/>
+        <AlertMessage bsStyle='success' message={this.props.successMessage}/>
+        <GroupProfileWithLoading {...this.props} />
+        {blockedUntil && <p>
+          Blocked Until: {blockedUntil}&nbsp;
+          <Button color='info' onClick={this.onRemoveBlackList}>Remove</Button>
+        </p>}
+        <Label for='blacklist'>Add to blacklist (seconds): </Label>
+        <Input
+          type='number'
+          name='seconds'
+          onChange={this.onSecondsChange}
+          value={this.state.seconds}
+        />
+        <Button color='danger' onClick={this.onAddBlackList}>Add</Button>
+      </div>
     )
   }
 }

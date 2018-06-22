@@ -40,7 +40,7 @@ class QuestionGroupStore {
   }
 
   @action async updateQuestionGroup({groupType, groupName, releaseTime}) {
-    const releaseTimeUTC = moment.utc(releaseTime)
+    const releaseTimeUTC = moment.utc(releaseTime).seconds(0)
     try {
       self.successMessage = null
       self.errorMessage = null

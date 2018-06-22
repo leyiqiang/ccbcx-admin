@@ -1,8 +1,9 @@
 import { action, observable } from 'mobx'
 import { getErrorMessage } from 'src/util/index'
-import { getGroupInfo } from 'src/api/group'
+import { getGroupInfo, getBlackList, addBlackList, removeBlackList } from 'src/api/group'
 import loadingStore from '../loading'
 import _ from 'lodash'
+import moment from 'moment'
 
 class GroupStore {
   @observable errorMessage = null
@@ -10,6 +11,9 @@ class GroupStore {
   @observable groupContact = null
   @observable invitationCode = null
   @observable memberList = []
+  @observable blockedUntil = null
+  @observable errorMessage = null
+  @observable successMessage = null
 
   constructor() {
     // this.getGroupInfo()
@@ -20,6 +24,9 @@ class GroupStore {
     self.groupContact = null
     self.invitationCode = null
     self.memberList = null
+    self.blockedUntil = null
+    self.errorMessage = null
+    self.successMessage = null
   }
 
   @action async getGroupInfo({ groupName }) {
@@ -36,11 +43,51 @@ class GroupStore {
         self.invitationCode = invitationCode
         self.memberList = memberList
       }
+      await self.getBlackList({groupName})
     } catch (err) {
       self.clearGroupInfo()
       self.errorMessage = getErrorMessage(err)
     }
     loadingStore.isGroupProfileLoading = false
+  }
+
+  @action async getBlackList({groupName}) {
+    try {
+      self.blockedUntil = null
+      const res = await getBlackList({groupName})
+      if (!_.isNil(res.data.blacklist)) {
+        const { blockedUntil } = res.data.blacklist
+        self.blockedUntil = moment.utc(blockedUntil).local().format('MM/DD/YYYY, h:mm:ss a')
+        console.log(self.blockedUntil)
+      }
+    } catch (err) {
+      self.clearGroupInfo()
+      self.errorMessage = getErrorMessage(err)
+    }
+  }
+
+  @action async addBlackList({groupName, seconds}) {
+    try {
+      self.errorMessage = null
+      await addBlackList({groupName, seconds})
+      await self.getBlackList({groupName})
+      self.successMessage = 'success'
+    } catch (err) {
+      self.clearGroupInfo()
+      self.errorMessage = getErrorMessage(err)
+    }
+  }
+
+  @action async removeBlackList({groupName}) {
+    try {
+      self.errorMessage = null
+      await removeBlackList({groupName})
+      self.blockedUntil = null
+      self.successMessage = 'success'
+    } catch (err) {
+      self.clearGroupInfo()
+      slef.errorMessage = getErrorMessage(err)
+    }
   }
 
 }
