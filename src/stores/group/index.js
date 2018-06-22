@@ -6,7 +6,6 @@ import _ from 'lodash'
 import moment from 'moment'
 
 class GroupStore {
-  @observable errorMessage = null
   @observable groupName = null
   @observable groupContact = null
   @observable invitationCode = null
@@ -58,7 +57,6 @@ class GroupStore {
       if (!_.isNil(res.data.blacklist)) {
         const { blockedUntil } = res.data.blacklist
         self.blockedUntil = moment.utc(blockedUntil).local().format('MM/DD/YYYY, h:mm:ss a')
-        console.log(self.blockedUntil)
       }
     } catch (err) {
       self.clearGroupInfo()

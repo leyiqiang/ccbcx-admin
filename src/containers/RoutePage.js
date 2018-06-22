@@ -4,13 +4,14 @@ import { withRouter } from 'react-router'
 import { observer, inject } from 'mobx-react'
 import PropTypes from 'prop-types'
 import _ from 'lodash'
-import {SIGN_IN, GROUP, QUESTION} from 'src/data/route'
+import {SIGN_IN, GROUP, QUESTION, DATA} from 'src/data/route'
 import SignInPage from './SignInPage'
 import InfoCard from 'src/components/InfoCard'
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer'
 import GroupRoutePage from './group/GroupRoutePage'
 import QuestionRoutePage from './question/QuestionRoutePage'
+import DataRoutePage from './data/DataRoutePage'
 
 @withRouter
 @inject(stores => {
@@ -69,6 +70,7 @@ class RoutePage extends Component {
           <NavBar logout={logout}/>
           <Switch>
             <Route path={QUESTION} component={QuestionRoutePage} />
+            <Route path={DATA} component={DataRoutePage} />
             <Route path={GROUP} component={GroupRoutePage} />
             <Route path={'*'} component={() => <Redirect to={QUESTION}/> } />
           </Switch>

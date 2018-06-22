@@ -12,3 +12,8 @@ export const PARAM_QUESTION_ID = ':questionNumber'
 export const QUESTION = '/questionGroup'
 export const QUESTION_LIST = QUESTION + '/list'
 export const QUESTION_SETTINGS = QUESTION + '/question/' + PARAM_QUESTION_ID
+
+export const DATA = '/data'
+export const DATA_GROUP =  DATA + '/group'
+export const DATA_QUESTION = DATA + '/question'
+export const DATA_CHART = DATA + '/chart'
