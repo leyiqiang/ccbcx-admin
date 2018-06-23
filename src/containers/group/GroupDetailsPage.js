@@ -93,17 +93,17 @@ class GroupDetailsPage extends Component {
         <AlertMessage bsStyle='success' message={this.props.successMessage}/>
         <GroupProfileWithLoading {...this.props} />
         {blockedUntil && <p>
-          Blocked Until: {blockedUntil}&nbsp;
-          <Button color='info' onClick={this.onRemoveBlackList}>Remove</Button>
+          解封时间: {blockedUntil}&nbsp;
+          <Button color='info' onClick={this.onRemoveBlackList}>解封</Button>
         </p>}
-        <Label for='blacklist'>Add to blacklist (seconds): </Label>
+        <Label for='blacklist'>封禁(秒): </Label>
         <Input
           type='number'
           name='seconds'
           onChange={this.onSecondsChange}
           value={this.state.seconds}
         />
-        <Button color='danger' onClick={this.onAddBlackList}>Add</Button>
+        <Button color='danger' onClick={this.onAddBlackList}>封禁</Button>
       </div>
     )
   }

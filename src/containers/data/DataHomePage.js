@@ -45,9 +45,9 @@ class DataHomePage extends Component {
     } = this.props
     return (
       <div>
-        <Button onClick={redirectToGroupData} color='link'>Sort by Group</Button>
-        <Button onClick={redirectToQuestionData} color='link'>Sort by Question</Button>
-        <Button onClick={redirectToChart} color='link'>Table and Charts</Button>
+        <Button onClick={redirectToGroupData} color='link'>按队伍查询</Button>
+        <Button onClick={redirectToQuestionData} color='link'>按题目查询</Button>
+        <Button onClick={redirectToChart} color='link'>数据表格</Button>
       </div>
     )
   }

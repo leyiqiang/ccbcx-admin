@@ -5,7 +5,7 @@ import {getQuestionGroup, updateQuestionGroup} from 'src/api/questionGroup'
 import {getQuestionList} from 'src/api/question'
 import _ from 'lodash'
 import moment from 'moment'
-import {PARAM_QUESTION_ID, QUESTION_SETTINGS} from 'src/data/route/index'
+import {PARAM_QUESTION_ID, QUESTION_SETTINGS, DATA_QUESTION_PROGRESS} from 'src/data/route/index'
 import {buildParamURI} from '../../util/index'
 import routing from '../routing'
 
@@ -99,6 +99,15 @@ class QuestionGroupStore {
   @action redirectToSettings({ questionNumber }) {
     let redirectedURI = buildParamURI({
       originalURI: QUESTION_SETTINGS,
+      paramName: PARAM_QUESTION_ID,
+      substitutedValue: questionNumber,
+    })
+    routing.history.push(redirectedURI)
+  }
+
+  @action redirectToProgress({ questionNumber }) {
+    let redirectedURI = buildParamURI({
+      originalURI: DATA_QUESTION_PROGRESS,
       paramName: PARAM_QUESTION_ID,
       substitutedValue: questionNumber,
     })

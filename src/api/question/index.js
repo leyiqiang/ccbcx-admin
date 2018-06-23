@@ -1,7 +1,7 @@
 import { axios } from 'src/api/axios'
 import {buildParamURI} from 'src/util'
 
-const PARAM_QUESTION_NUMBER = ':questionNumber'
+export const PARAM_QUESTION_NUMBER = ':questionNumber'
 
 const QUESTION_API = '/api/admin/question'
 

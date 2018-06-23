@@ -4,7 +4,7 @@ import {buildParamURI} from 'src/util'
 
 const GROUP_API = '/api/admin/group'
 
-const PARAM_GROUP_NAME = ':groupName'
+export const PARAM_GROUP_NAME = ':groupName'
 
 const GROUP_INFO = GROUP_API + '/info/' + PARAM_GROUP_NAME
 const GROUP_LIST = GROUP_API + '/list'

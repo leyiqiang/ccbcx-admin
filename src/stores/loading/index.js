@@ -10,6 +10,10 @@ class LoadingStore {
   @observable isQuestionGroupLoading = true;
   @observable isQuestionListLoading = true;
   @observable isQuestionInfoLoading = true;
+  @observable isDataGroupLoading = true;
+  @observable isDataQuestionLoading = true;
+  @observable isDataChartLoading = true;
+
   constructor () {
   }
 }
