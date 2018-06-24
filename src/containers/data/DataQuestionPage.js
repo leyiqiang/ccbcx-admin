@@ -56,8 +56,8 @@ class DataQuestionPage extends Component {
       return (
         <QuestionProgressButton
           key={q.questionNumber}
-          questionNumber={q.questionNumber}
-          onRedirectToQuestionProgress={onRedirectToQuestionProgress}/>
+          content={q.questionNumber}
+          onRedirect={onRedirectToQuestionProgress}/>
       )
     })
     if (isQuestionListLoading) {
