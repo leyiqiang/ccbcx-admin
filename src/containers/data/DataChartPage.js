@@ -1,43 +1,52 @@
 import React, { Component } from 'react'
-import { Button } from 'reactstrap'
-import { observer, inject } from 'mobx-react'
+import { observer, inject, PropTypes as MobxPropTypes } from 'mobx-react'
 import PropTypes from 'prop-types'
+import { BootstrapTable, TableHeaderColumn } from 'react-bootstrap-table'
+import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css'
 
-// @inject(stores => {
-//   const { dataStore, loadingStore } = stores
-//   // const { isAuthLoading } = loadingStore
-//   const {
-//     redirectToGroupData,
-//     redirectToQuestionData,
-//     redirectToChart,
-//     successMessage,
-//     errorMessage,
-//
-//   } = dataStore
-//   return {
-//     redirectToGroupData,
-//     redirectToQuestionData,
-//     redirectToChart,
-//     successMessage,
-//     errorMessage,
-//   }
-// })
+@inject(stores => {
+  const { dataChartStore, loadingStore } = stores
+  const { isDataChartLoading } = loadingStore
+  const {
+    progressList,
+    getProgressList,
+    redirectToHome,
+    successMessage,
+    errorMessage,
+  } = dataChartStore
+  return {
+    progressList,
+    getProgressList,
+    redirectToHome,
+    isDataChartLoading,
+    successMessage,
+    errorMessage,
+  }
+})
 @observer
 class DataChartPage extends Component {
   constructor(props) {
     super(props)
   }
 
+  componentWillMount() {
+    this.props.getProgressList()
+  }
+
   static propTypes = {
+    isDataChartLoading: PropTypes.bool.isRequired,
+    progressList: MobxPropTypes.observableArray,
+    getProgressList: PropTypes.func.isRequired,
+    redirectToHome: PropTypes.func.isRequired,
+    errorMessage: PropTypes.string,
   }
 
 
   render() {
-    // const {} = this.props
+    const {progressList} = this.props
+    const tdStyle = {wordWrap: 'break-word', whiteSpace: 'normal' }
     return (
-      <div>
-          chart
-      </div>
+      <div>Todo</div>
     )
   }
 }

@@ -5,6 +5,7 @@ import { getErrorMessage } from 'src/util'
 import loadingStore from '../loading'
 import _ from 'lodash'
 import { getProgressList } from 'src/api/data'
+import moment from 'moment'
 
 class DataStore {
   @observable errorMessage = null
@@ -30,7 +31,11 @@ class DataStore {
     loadingStore.isDataChartLoading = true
     try {
       const res = await getProgressList()
-      self.progressList = res.data
+      const progressList = res.data
+      self.progressList = _.map(progressList, (p)=>{
+        p.completeTime = moment(p.completeTime).utc().local().format('MM/DD/YYYY, h:mm:ss a')
+        return p
+      })
       loadingStore.isDataChartLoading = false
     } catch(err) {
       self.errorMessage = getErrorMessage(err)

@@ -5,27 +5,27 @@ import { ListGroupItem } from 'reactstrap'
 
 
 @observer
-class QuestionProgressButton extends Component {
+class ProgressButton extends Component {
   constructor(props) {
     super(props)
   }
 
   static propTypes = {
-    questionNumber: PropTypes.string.isRequired,
-    onRedirectToQuestionProgress: PropTypes.func.isRequired,
+    content: PropTypes.string.isRequired,
+    onRedirect: PropTypes.func.isRequired,
   }
 
 
   render() {
-    const { questionNumber, onRedirectToQuestionProgress } = this.props
+    const { content, onRedirect } = this.props
     return(
       <ListGroupItem
-        onClick={onRedirectToQuestionProgress}
+        onClick={onRedirect}
         action>
-        {questionNumber}
+        {content}
       </ListGroupItem>
     )
   }
 }
 
-export default QuestionProgressButton
+export default ProgressButton

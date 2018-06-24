@@ -6,6 +6,7 @@ import loadingStore from '../loading'
 import {buildParamURI} from 'src/util'
 import routing from '../routing'
 import _ from 'lodash'
+import {DATA_GROUP_PROGRESS} from '../../data/route/index';
 
 class GroupListStore {
   @observable errorMessage = null
@@ -36,6 +37,16 @@ class GroupListStore {
   @action redirectToDetails({ groupName }) {
     let redirectedURI = buildParamURI({
       originalURI: GROUP_DETAILS,
+      paramName: PARAM_GROUP_NAME,
+      substitutedValue: groupName,
+    })
+    routing.history.push(redirectedURI)
+  }
+
+
+  @action redirectToGroupProgress({ groupName }) {
+    let redirectedURI = buildParamURI({
+      originalURI: DATA_GROUP_PROGRESS,
       paramName: PARAM_GROUP_NAME,
       substitutedValue: groupName,
     })

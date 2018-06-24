@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { observer, inject, PropTypes as MobxPropTypes } from 'mobx-react'
 import PropTypes from 'prop-types'
 import AlertMessage from '../../components/AlertMessage'
-import QuestionProgressButton from '../../components/question/QuestionProgressButton'
+import QuestionProgressButton from '../../components/question/ProgressButton'
 import _ from 'lodash'
 import { ListGroup } from 'reactstrap'
 
