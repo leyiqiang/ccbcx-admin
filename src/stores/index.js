@@ -10,6 +10,7 @@ import dataStore from './data'
 import dataQuestionStore from './dataQuestion'
 import dataGroupStore from './dataGroup'
 import dataChartStore from './dataChart'
+import newsStore from './news'
 
 const stores = {
   routingStore,
@@ -24,6 +25,7 @@ const stores = {
   dataQuestionStore,
   dataGroupStore,
   dataChartStore,
+  newsStore,
 }
 
 export default stores

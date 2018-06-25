@@ -24,3 +24,6 @@ export const DATA_QUESTION_PROGRESS = DATA + '/question/' + PARAM_QUESTION_ID
 
 export const DATA_CHART = DATA + '/chart'
 
+export const NEWS = '/news'
+
+

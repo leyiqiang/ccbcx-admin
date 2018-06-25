@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { Button } from 'react-bootstrap'
-import {ROOT, GROUP, QUESTION, DATA} from 'src/data/route/index'
+import {GROUP, QUESTION, DATA, NEWS} from 'src/data/route'
 // import _ from 'lodash'
 
 @observer
@@ -50,7 +50,7 @@ class NavBar extends Component {
               </Link>
             </Nav>
             <Nav navbar>
-              <Link to={ROOT}>
+              <Link to={NEWS}>
                 <Button>官方消息</Button>
               </Link>
             </Nav>

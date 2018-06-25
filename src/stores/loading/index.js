@@ -13,6 +13,7 @@ class LoadingStore {
   @observable isDataGroupLoading = true;
   @observable isDataQuestionLoading = true;
   @observable isDataChartLoading = true;
+  @observable isNewsListLoading = true;
 
   constructor () {
   }
