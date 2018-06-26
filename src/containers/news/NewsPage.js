@@ -4,19 +4,20 @@ import { observer, inject, PropTypes as MobxPropTypes } from 'mobx-react'
 import PropTypes from 'prop-types'
 import AlertMessage from '../../components/AlertMessage'
 import _ from 'lodash'
-import { Input, Button } from 'reactstrap'
+import { Input, Button, Jumbotron } from 'reactstrap'
 
 
 @inject(stores => {
   const { newsStore, loadingStore } = stores
   const { isNewsListLoading } = loadingStore
-  const { getNews, addNews, successMessage, errorMessage, newsList } = newsStore
+  const { getNews, addNews, successMessage, errorMessage, newsList, deleteNews } = newsStore
   return {
     successMessage,
     errorMessage,
     getNews,
     addNews,
     newsList,
+    deleteNews,
     isNewsListLoading,
   }
 })
@@ -27,6 +28,7 @@ class NewsPage extends Component {
     this.renderNewsList = this.renderNewsList.bind(this)
     this.onMessageChange = this.onMessageChange.bind(this)
     this.onAddNews = this.onAddNews.bind(this)
+    this.onDeleteNews = this.onDeleteNews.bind(this)
     this.state = {
       message: '',
     }
@@ -39,6 +41,7 @@ class NewsPage extends Component {
     addNews: PropTypes.func.isRequired,
     isNewsListLoading: PropTypes.bool.isRequired,
     newsList: MobxPropTypes.observableArray,
+    deleteNews: PropTypes.func.isRequired,
   }
 
   componentWillMount() {
@@ -54,6 +57,11 @@ class NewsPage extends Component {
 
   onAddNews() {
     this.props.addNews({message: this.state.message})
+    this.setState({ message: '' })
+  }
+
+  onDeleteNews({_id}) {
+    this.props.deleteNews({_id})
   }
 
   renderNewsList() {
@@ -63,17 +71,18 @@ class NewsPage extends Component {
     } = this.props
     const newsListView = _.map(newsList, (n) => {
       return (
-        <div>
+        <li key={n._id} className='list-group-item'>
+          <h5>{n.createdAt}</h5>
           <p>{n.message}</p>
-          <br/>
-        </div>
+          <Button color='danger' onClick={() => {this.onDeleteNews({_id: n._id})}}>Delete</Button>
+        </li>
       )
     })
     if (isNewsListLoading) {
       return <h3>Loading...</h3>
     }
 
-    return <div>{newsListView}</div>
+    return <ul className='list-group'>{newsListView}</ul>
   }
 
 
@@ -91,10 +100,10 @@ class NewsPage extends Component {
         />
         <Button
           onClick={this.onAddNews}
-          color='danger'>
+          color='info'>
           Add
         </Button>
-        {this.renderNewsList}
+        {this.renderNewsList()}
       </div>
     )
   }

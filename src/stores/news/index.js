@@ -4,7 +4,7 @@ import { getErrorMessage } from 'src/util'
 import loadingStore from '../loading'
 import _ from 'lodash'
 import moment from 'moment'
-import { addNews, getNews } from 'src/api/news'
+import { addNews, getNews, deleteNews } from 'src/api/news'
 
 
 class NewsStore {
@@ -27,7 +27,7 @@ class NewsStore {
     try {
       await addNews({message})
       self.successMessage = 'success'
-      await getNews()
+      await self.getNews()
     } catch(err) {
       self.errorMessage = getErrorMessage(err)
       self.newsList = null
@@ -39,12 +39,28 @@ class NewsStore {
     loadingStore.isNewsListLoading = true
     try {
       const res = await getNews()
-      self.newsList = res.data
+      const newsList = res.data
+      self.newsList = _.map(newsList, (n) => {
+        n.createdAt = moment.utc(n.createdAt).local().format('MM/DD/YYYY, h:mm:ss a')
+        return n
+      })
       loadingStore.isNewsListLoading = false
     } catch (err) {
       self.errorMessage = getErrorMessage(err)
       self.newsList = null
       loadingStore.isNewsListLoading = false
+    }
+  }
+
+  @action async deleteNews({_id}) {
+    self.clearDataInfo()
+    try {
+      await deleteNews({_id})
+      await self.getNews()
+    } catch (err) {
+      self.errorMessage = getErrorMessage(err)
+      self.newsList = null
+
     }
   }
 }
