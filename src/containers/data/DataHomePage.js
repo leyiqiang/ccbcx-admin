@@ -48,6 +48,7 @@ class DataHomePage extends Component {
         <Button onClick={redirectToGroupData} color='link'>按队伍查询</Button>
         <Button onClick={redirectToQuestionData} color='link'>按题目查询</Button>
         <Button onClick={redirectToChart} color='link'>全部数据</Button>
+        <a href='https://ccbcx-data-visualizing.herokuapp.com/'>Analysis</a>
       </div>
     )
   }
