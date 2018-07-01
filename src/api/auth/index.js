@@ -1,6 +1,6 @@
 import { axios } from 'src/api/axios'
 
-const AUTH_API = '/api/auth'
+const AUTH_API = '/api/admin/auth'
 
 const SIGN_IN = AUTH_API + '/signIn'
 

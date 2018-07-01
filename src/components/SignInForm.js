@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { observer } from 'mobx-react'
 import _ from 'lodash'
-import { Button } from 'reactstrap'
+import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 import PropTypes from 'prop-types'
 
 // @withRouter
@@ -9,15 +9,31 @@ import PropTypes from 'prop-types'
 class SignInForm extends Component {
   constructor(props) {
     super(props)
+
+    this.onUserNameChange = this.onUserNameChange.bind(this)
+    this.onPasswordChange = this.onPasswordChange.bind(this)
     this.renderErrorMessage = this.renderErrorMessage.bind(this)
     this.onLogin = this.onLogin.bind(this)
   }
 
   static propTypes = {
+    userName: PropTypes.string,
+    password: PropTypes.string,
+    setUserName: PropTypes.func.isRequired,
+    setPassword: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
     errorMessage: PropTypes.string,
   }
 
+  onUserNameChange(e) {
+    e.preventDefault()
+    this.props.setUserName(e.target.value)
+  }
+
+  onPasswordChange(e) {
+    e.preventDefault()
+    this.props.setPassword(e.target.value)
+  }
 
   renderErrorMessage() {
     if (_.isNil(this.props.errorMessage)) {
@@ -40,8 +56,26 @@ class SignInForm extends Component {
     return (
       <div>
         <h3>请登陆</h3>
-        {this.renderErrorMessage()}
-        <Button onClick={this.onLogin}>登陆</Button>
+        <Form>
+          {this.renderErrorMessage()}
+          <FormGroup>
+            <Label>用户名</Label>
+            <Input
+              type='text'
+              name='userName'
+              value={this.props.userName}
+              onChange={this.onUserNameChange}/>
+          </FormGroup>
+          <FormGroup>
+            <Label for="examplePassword">密码</Label>
+            <Input
+              type="password"
+              name="password"
+              value={this.props.password}
+              onChange={this.onPasswordChange}/>
+          </FormGroup>
+          <Button onClick={this.onLogin}>登陆</Button>
+        </Form>
       </div>
     )
   }

@@ -3,6 +3,11 @@ import _ from 'lodash'
 
 const cookies = new Cookies()
 
+const changeAxiosInstanceXAccessTokenHeader = (token) => {
+  const { axios } =  require('src/api/axios')
+  axios.defaults.headers['x-access-token'] = token
+}
+
 const changeAxiosInstanceAuthTokenHeader = (token) => {
   const { axios } =  require('src/api/axios')
   axios.defaults.headers['Authorization'] = 'Bearer ' + token
@@ -21,6 +26,23 @@ export const setAuthToken = (token) => {
 
   changeAxiosInstanceAuthTokenHeader(token)
 }
+
+
+export const getXAccessTokenFromCookie = () => {
+  return cookies.get('x-access-token')
+}
+
+export const setXAccessToken = (token) => {
+  if (_.isNil(token)) {
+    cookies.remove('x-access-token')
+  } else {
+    cookies.set('x-access-token', token)
+  }
+
+  changeAxiosInstanceXAccessTokenHeader(token)
+}
+
+
 
 export const getErrorMessage = (err) => {
   if (!_.isNil(err.response)) {

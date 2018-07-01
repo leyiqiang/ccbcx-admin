@@ -1,7 +1,7 @@
 import { action, observable } from 'mobx'
-import { setAuthToken, getErrorMessage } from 'src/util'
+import { setXAccessToken, getErrorMessage } from 'src/util'
+import { signIn } from 'src/api/auth'
 import sessionStore from 'src/stores/session'
-import { webAuth } from 'src/util/auth0'
 
 class AuthStore {
   @observable userName = '';
@@ -11,21 +11,30 @@ class AuthStore {
   constructor () {
   }
 
-  @action async login() {
-    webAuth.authorize()
+  @action setUserName(userName) {
+    self.userName = userName
   }
 
-  @action async handleAuthentication({hash}) {
-    await webAuth.parseHash({hash}, (err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        sessionStore.promise.then(() => {
-          setAuthToken(authResult.accessToken)
-          sessionStore.getAuthInfo()
-        })
-      } else if (err) {
-        self.errorMessage = getErrorMessage(err)
-      }
-    })
+
+  @action setPassword(password) {
+    self.password = password
+  }
+
+  @action async login() {
+    try {
+      const res = await signIn({
+        userName: self.userName,
+        password: self.password,
+      })
+
+      setXAccessToken(res.data.token)
+      await sessionStore.getUserInfo()
+      self.errorMessage = null
+      self.userName = ''
+      self.password = ''
+    } catch (err) {
+      self.errorMessage = getErrorMessage(err)
+    }
   }
 }
 
