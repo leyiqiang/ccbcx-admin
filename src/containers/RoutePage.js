@@ -16,15 +16,12 @@ import NewsPage from './news/NewsPage'
 
 @withRouter
 @inject(stores => {
-  const { sessionStore, authStore, loadingStore } = stores
-  const { authMessage, logout, getAuthInfo } = sessionStore
-  const { handleAuthentication } = authStore
+  const { sessionStore, loadingStore } = stores
+  const { userInfo, logout } = sessionStore
   const { isAuthLoading } = loadingStore
   return {
-    authMessage,
-    getAuthInfo,
+    userInfo,
     logout,
-    handleAuthentication,
     isAuthLoading,
   }
 })
@@ -36,25 +33,17 @@ class RoutePage extends Component {
   }
 
   static propTypes =  {
-    authMessage: PropTypes.object,
+    userInfo: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    getAuthInfo: PropTypes.func.isRequired,
-    handleAuthentication: PropTypes.func.isRequired,
     isAuthLoading: PropTypes.bool.isRequired,
   }
 
-  componentWillMount() {
-    if (/access_token|id_token|error/.test(location.hash)) {
-      this.props.handleAuthentication({ hash: location.hash })
-    }
-  }
-
   renderRoute() {
-    const { authMessage, logout, isAuthLoading } = this.props
+    const { userInfo, logout, isAuthLoading } = this.props
     if(isAuthLoading) {
       return (<h3>Loading...</h3>)
     }
-    if (_.isNil(authMessage)) {
+    if (_.isNil(userInfo)) {
       return(
         <div>
           <InfoCard/>
