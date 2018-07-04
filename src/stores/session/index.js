@@ -1,34 +1,31 @@
-import { action, observable, autorun } from 'mobx'
-import { getAuthInfo } from 'src/api/session'
-import { setAuthToken } from 'src/util'
+import { action, observable } from 'mobx'
+import { getUserInfo } from 'src/api/session'
+import { setXAccessToken } from 'src/util'
 import loadingStore from '../loading'
 
 class SessionStore {
-  @observable authMessage = null
-  @observable promise = null
+  @observable userInfo = null
 
   constructor() {
-    this.promise = this.getAuthInfo()
+    this.getUserInfo()
   }
 
   @action logout() {
-    setAuthToken(null)
-    self.authMessage = null
+    setXAccessToken(null)
+    self.userInfo = null
   }
 
-  @action async getAuthInfo() {
+  @action async getUserInfo() {
     try {
-      loadingStore.isAuthLoading = true
-      const res = await getAuthInfo()
-      self.authMessage = res.data
-      loadingStore.isAuthLoading = false
+      loadingStore.isUserInfoLoading = true
+      const res = await getUserInfo()
+      self.userInfo = res.data
+      loadingStore.isUserInfoLoading = false
     } catch (err) {
-      setAuthToken(null)
-      self.authMessage = null
+      setXAccessToken(null)
     }
-    loadingStore.isAuthLoading = false
+    loadingStore.isUserInfoLoading = false
   }
-
 }
 
 const self = new SessionStore()

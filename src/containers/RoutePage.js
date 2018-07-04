@@ -18,11 +18,11 @@ import NewsPage from './news/NewsPage'
 @inject(stores => {
   const { sessionStore, loadingStore } = stores
   const { userInfo, logout } = sessionStore
-  const { isAuthLoading } = loadingStore
+  const { isUserInfoLoading } = loadingStore
   return {
     userInfo,
     logout,
-    isAuthLoading,
+    isUserInfoLoading,
   }
 })
 @observer
@@ -35,12 +35,12 @@ class RoutePage extends Component {
   static propTypes =  {
     userInfo: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    isAuthLoading: PropTypes.bool.isRequired,
+    isUserInfoLoading: PropTypes.bool.isRequired,
   }
 
   renderRoute() {
-    const { userInfo, logout, isAuthLoading } = this.props
-    if(isAuthLoading) {
+    const { userInfo, logout, isUserInfoLoading } = this.props
+    if(isUserInfoLoading) {
       return (<h3>Loading...</h3>)
     }
     if (_.isNil(userInfo)) {
